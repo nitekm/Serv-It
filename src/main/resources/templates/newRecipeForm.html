@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serv It Application</title>
+    <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm.min.css">
+</head>
+<body>
+<fieldset>
+    <h2>Nowy przepis</h2>
+    <form method="post" th:action="@{/recipes}" th:object="${recipe}">
+        <legend>Nazwa</legend>
+        <input type="text" th:field="*{name}"/>
+
+        <legend>Czas przygotowania</legend>
+        <input type="text" th:field="*{timeToPrepare}"/>
+
+        <!--/*@thymesVar id="steps" type="io.github.mnitek.servit.model.Recipe"*/-->
+        <fieldset th:each="step, sStat:${recipe.steps}">
+            <legend th:text="|Krok ${sStat.index+1}|"></legend>
+            <input type="text" th:field="*{steps[__${sStat.index}__].description}">
+        </fieldset>
+
+        <legend>Składniki</legend>
+        <!--/*@thymesVar id="ingredients" type="io.github.mnitek.servit.model.Recipe"*/-->
+        <fieldset th:each="ingredient, iStat:${recipe.ingredients}">
+            <input type="text" th:field="*{ingredients[__${iStat.index}__].name}">
+        </fieldset>
+
+        <button type="submit">Dodaj przepis</button>
+
+    </form>
+</fieldset>
+</body>
+</html>

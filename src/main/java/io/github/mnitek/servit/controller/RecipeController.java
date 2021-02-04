@@ -1,48 +1,44 @@
 package io.github.mnitek.servit.controller;
 
+import io.github.mnitek.servit.model.Ingredient;
 import io.github.mnitek.servit.model.Recipe;
-import io.github.mnitek.servit.repository.RecipeRepository;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import io.github.mnitek.servit.model.Step;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.util.AutoPopulatingList;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/recipes")
 public class RecipeController {
 
-    private RecipeRepository recipeRepository;
-
-    public RecipeController(RecipeRepository recipeRepository) {
-        this.recipeRepository = recipeRepository;
-    }
-
     @GetMapping
-    public ResponseEntity<List<Recipe>> getAllRecipes() {
-        return ResponseEntity.ok(recipeRepository.findAll());
+    public String showAllRecipes(Model model) {
+        log.info("Exposing all recipes");
+        model.addAttribute("message", "Gdzie moje recipy?!");
+        model.addAttribute("recipe", new Recipe());
+        return "recipes";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Recipe> getRecipe(@PathVariable("id") int id) {
-        return recipeRepository.findById(id)
-                .map(recipe -> ResponseEntity.ok(recipe))
-                .orElse(ResponseEntity.notFound().build());
+    @GetMapping("/add")
+    public String showAddRecipeForm(Model model) {
+        //model.addAttribute("steps", new Step());
+        //model.addAttribute("ingredients", new Ingredient());
+        model.addAttribute("recipe", new Recipe());
+        return "newRecipeForm";
     }
 
     @PostMapping
-    public ResponseEntity<Recipe> addRecipe(Recipe newRecipe) {
-        Recipe result = recipeRepository.save(newRecipe);
-        return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Recipe> deleteRecipeById(@PathVariable("id") int id) {
-        if(!recipeRepository.existsById(id)) return ResponseEntity.notFound().build();
-        recipeRepository.findById(id)
-                .ifPresent(recipe -> recipeRepository.delete(recipe));
-        return ResponseEntity.noContent().build();
+    public String addNewRecipe(Recipe recipe) {
+        log.info("Added new recipe");
+        return "redirect:/";
     }
 }

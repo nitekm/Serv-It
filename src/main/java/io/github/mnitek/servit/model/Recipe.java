@@ -1,39 +1,21 @@
 package io.github.mnitek.servit.model;
 
-import javax.persistence.*;
+import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Data
 public class Recipe {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToMany
-    private List<RecipeStep> recipeSteps;
-    @OneToMany
-    private List<Ingredient> ingredients;
+    private String name;
+    private String timeToPrepare;
+    private List<Step> steps = new ArrayList<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
+    private boolean planned;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public List<RecipeStep> getRecipeSteps() {
-        return recipeSteps;
-    }
-
-    public void setRecipeSteps(List<RecipeStep> recipeSteps) {
-        this.recipeSteps = recipeSteps;
-    }
-
-    public List<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public Recipe() {
+        steps.add(new Step());
+        ingredients.add(new Ingredient());
     }
 }

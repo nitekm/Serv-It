@@ -12,9 +12,4 @@ public class ServItApplication {
     public static void main(String[] args) {
         SpringApplication.run(ServItApplication.class, args);
     }
-
-    @Bean
-    Validator validator() {
-        return new LocalValidatorFactoryBean();
-    }
 }
