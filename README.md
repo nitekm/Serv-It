@@ -14,6 +14,3 @@ https://todo.microsoft.com/ (Android and iPhone versions are available at releva
   * Validation
   * Lombok
 * Thymeleaf
-
-## Setup
-You can use this application from my github pages at: https://nitekm.github.io/Serv-It/
