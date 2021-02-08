@@ -18,17 +18,22 @@
         <legend>Czas przygotowania</legend>
         <input type="text" th:field="*{timeToPrepare}"/>
 
-        <!--/*@thymesVar id="steps" type="io.github.mnitek.servit.model.Recipe"*/-->
-        <fieldset th:each="step, sStat:${recipe.steps}">
-            <legend th:text="|Krok ${sStat.index+1}|"></legend>
-            <input type="text" th:field="*{steps[__${sStat.index}__].description}">
-        </fieldset>
-
         <legend>Składniki</legend>
         <!--/*@thymesVar id="ingredients" type="io.github.mnitek.servit.model.Recipe"*/-->
         <fieldset th:each="ingredient, iStat:${recipe.ingredients}">
             <input type="text" th:field="*{ingredients[__${iStat.index}__].name}">
         </fieldset>
+        <div><button type="submit" name="addIngredient">+</button></div>
+        <br>
+
+        <!--/*@thymesVar id="steps" type="io.github.mnitek.servit.model.Recipe"*/-->
+        <fieldset th:each="step, sStat:${recipe.steps}">
+            <legend th:text="|Krok ${sStat.index+1}|"></legend>
+            <input type="text" th:field="*{steps[__${sStat.index}__].description}">
+        </fieldset>
+        <div><button type="submit" name="addStep">+</button></div>
+
+
 
         <button type="submit">Dodaj przepis</button>
 

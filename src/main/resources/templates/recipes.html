@@ -9,13 +9,20 @@
     <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm.min.css">
 </head>
 <body>
-    <h2>Przepisy:</h2>
-    <div th:text="${message}">...</div>
-    <div>
-        <!--/*@thymesVar id="recipes" type="io.github.mnitek.servit.model.Recipe"*/-->
-        <ul th:each="recipe:${recipes}">
-            <li th:text="|${recipe.name} czas przygotowania ${recipe.timeToPrepare}|"></li>
-        </ul>
-    </div>
+    <h2>Przepisy:</h2><br>
+    <!--/*@thymesVar id="recipes" type="io.github.mnitek.servit.model.Recipe"*/-->
+    <ul th:each="recipe:${recipes}">
+        <li>
+            <label>
+                <a th:href="@{/recipes/{id}(id=${recipe.id})}">
+            <span th:text="${recipe.name}"></span><br>
+                </a>
+                <small th:text="|czas przygotowania: ${recipe.timeToPrepare}|"></small>
+            </label>
+        </li>
+    </ul>
+
+
+
 </body>
 </html>

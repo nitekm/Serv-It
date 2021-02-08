@@ -12,5 +12,5 @@ https://todo.microsoft.com/ (Android and iPhone versions are available at releva
   * JPA
   * H2 Databse
   * Validation
-  * Lombok
+  *Lombok
 * Thymeleaf
