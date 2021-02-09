@@ -7,16 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serv It Application</title>
     <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm.min.css">
+    <style>
+        .C\(red\) {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <fieldset>
     <h2>Nowy przepis</h2>
     <form method="post" th:action="@{/recipes}" th:object="${recipe}">
         <legend>Nazwa</legend>
-        <input type="text" th:field="*{name}"/>
+        <input type="text" th:field="*{name}" />
+        <small class="C(red)" th:if="${#fields.hasErrors('name')}"
+              th:errors="*{name}">...</small>
 
         <legend>Czas przygotowania</legend>
         <input type="text" th:field="*{timeToPrepare}"/>
+        <small class="C(red)" th:if="${#fields.hasErrors('timeToPrepare')}"
+              th:errors="*{timeToPrepare}">...</small><br>
 
         <legend>Składniki</legend>
         <!--/*@thymesVar id="ingredients" type="io.github.mnitek.servit.model.Recipe"*/-->
@@ -32,8 +41,6 @@
             <input type="text" th:field="*{steps[__${sStat.index}__].description}">
         </fieldset>
         <div><button type="submit" name="addStep">+</button></div>
-
-
 
         <button type="submit">Dodaj przepis</button>
 

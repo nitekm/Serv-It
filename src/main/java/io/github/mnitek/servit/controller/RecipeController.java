@@ -5,12 +5,13 @@ import io.github.mnitek.servit.model.Ingredient;
 import io.github.mnitek.servit.model.Recipe;
 import io.github.mnitek.servit.model.Step;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 
 @Slf4j
@@ -23,14 +24,7 @@ public class RecipeController {
         this.recipeRepo = recipeRepo;
     }
 
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public List<Recipe> getAll() {
-        return recipeRepo.findAll();
-    }
-
-    @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping
     public String showAllRecipes(Model model) {
         log.info("Exposing all recipes");
         model.addAttribute("recipes", recipeRepo.findAll());
@@ -39,7 +33,9 @@ public class RecipeController {
 
     @GetMapping("/{id}")
     public String getSingleRecipe(@PathVariable("id") int id, Model model) {
-        model.addAttribute("recipe", recipeRepo.findById(id));
+        Recipe recipe = recipeRepo.findById(id).orElse(null);
+        log.info("Exposing recipe: " + recipe);
+        model.addAttribute("recipe", recipe);
         return "singleRecipe";
     }
 
@@ -50,8 +46,9 @@ public class RecipeController {
     }
 
     @PostMapping
-    public String addNewRecipe(Recipe recipe) {
-        log.info("Added new recipe");
+    public String addNewRecipe(@Valid Recipe recipe, Errors errors) {
+        if (errors.hasErrors()) return "newRecipeForm";
+        log.info("Added new recipe " + recipe);
         recipeRepo.save(recipe);
         return "redirect:/";
     }
@@ -66,5 +63,12 @@ public class RecipeController {
     public String addRecipeIngredient(@ModelAttribute("recipe") Recipe currentRecipe) {
         currentRecipe.getIngredients().add(new Ingredient());
         return "newRecipeForm";
+    }
+
+    @Transactional
+    @PatchMapping("/{id}")
+    public void togglePlanned(@PathVariable("id") int id) {
+        if (!recipeRepo.existsById(id)) log.warn("Recipe does not exists");
+        recipeRepo.findById(id).ifPresent(recipe -> recipe.setPlanned(!recipe.isPlanned()));
     }
 }
