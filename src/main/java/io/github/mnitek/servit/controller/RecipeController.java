@@ -1,10 +1,12 @@
 package io.github.mnitek.servit.controller;
 
 import io.github.mnitek.servit.data.RecipeRepository;
+import io.github.mnitek.servit.logic.RecipeService;
 import io.github.mnitek.servit.model.Ingredient;
 import io.github.mnitek.servit.model.Recipe;
 import io.github.mnitek.servit.model.Step;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Slf4j
@@ -19,12 +22,14 @@ import javax.validation.Valid;
 @RequestMapping("/recipes")
 public class RecipeController {
     private RecipeRepository recipeRepo;
+    private RecipeService recipeService;
 
-    public RecipeController(RecipeRepository recipeRepo) {
+    public RecipeController(RecipeRepository recipeRepo, RecipeService recipeService) {
         this.recipeRepo = recipeRepo;
+        this.recipeService = recipeService;
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
     public String showAllRecipes(Model model) {
         log.info("Exposing all recipes");
         model.addAttribute("recipes", recipeRepo.findAll());
@@ -65,10 +70,24 @@ public class RecipeController {
         return "newRecipeForm";
     }
 
-    @Transactional
-    @PatchMapping("/{id}")
-    public void togglePlanned(@PathVariable("id") int id) {
-        if (!recipeRepo.existsById(id)) log.warn("Recipe does not exists");
-        recipeRepo.findById(id).ifPresent(recipe -> recipe.setPlanned(!recipe.isPlanned()));
+    @GetMapping("/plan/{id}")
+    public String togglePlanned(@PathVariable("id") int id) {
+        recipeService.togglePlanned(id);
+        return "redirect:/recipes";
+    }
+
+    @GetMapping("delete/{id}")
+        public String deleteRecipe(@PathVariable("id") int id) {
+        recipeService.deleteRecipe(id);
+        return "redirect:/recipes";
+    }
+
+    /*
+    * JSON responses for POSTMAN testing
+    */
+    @ResponseBody
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Recipe> getAllrecipes() {
+        return recipeRepo.findAll();
     }
 }

@@ -14,7 +14,7 @@ public class ServItApplication {
         SpringApplication.run(ServItApplication.class, args);
     }
 
-    /*
+
     //Fill recipe table with some data for test purposes
     @Bean
     public CommandLineRunner dataLoader(RecipeRepository repository) {
@@ -29,5 +29,5 @@ public class ServItApplication {
         };
     }
 
-     */
+
 }

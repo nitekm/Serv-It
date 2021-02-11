@@ -31,14 +31,19 @@ public class Recipe {
         ingredients.add(new Ingredient());
     }
 
-    /*
+    //test
     public Recipe(String name) {
         this.name = name;
     }
-     */
 
     @PrePersist
     public void setCreatedAt() {
         createdAt = LocalDateTime.now();
+    }
+
+    public void toggleIngredients() {
+        for (Ingredient i:ingredients) {
+            i.setPlanned(!i.isPlanned());
+        }
     }
 }
