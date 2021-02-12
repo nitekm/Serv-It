@@ -1,5 +1,6 @@
 package io.github.mnitek.servit.security;
 
+import io.github.mnitek.servit.data.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +17,14 @@ public class RegistrationController {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
     }
-
     @GetMapping
     public String registerForm() {
-        return "/registration";
+        return "register";
     }
 
     @PostMapping
-    public String processRegistration(RegistrationForm registrationForm) {
-        userRepo.save(registrationForm.toUser(passwordEncoder));
+    public String processRegistration(RegistrationForm form) {
+        userRepo.save(form.toUser(passwordEncoder));
         return "redirect:/login";
     }
 }

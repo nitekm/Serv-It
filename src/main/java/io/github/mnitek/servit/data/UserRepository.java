@@ -1,9 +1,9 @@
-package io.github.mnitek.servit.security;
+package io.github.mnitek.servit.data;
 
+import io.github.mnitek.servit.User;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 
 public interface UserRepository extends CrudRepository<User, Integer> {
-    User findByUsername(String username);
+        User findByUsername(String username);
 }

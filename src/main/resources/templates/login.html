@@ -17,9 +17,9 @@
 <header>
     <fieldset>
         <h1>Logowanie</h1><br>
-<div th:if="${error}">
-    Hasło lub nazwa użytkownika jest nie poprawne
-</div>
+        <div th:if="${error}">
+            Hasło lub nazwa użytkownika jest nie poprawne
+        </div>
         <form method="post" th:action="@{/login}" id="loginForm">
             <label for="username">Nazwa użytkownika</label>
             <input type="text" name="username" id="username"/>

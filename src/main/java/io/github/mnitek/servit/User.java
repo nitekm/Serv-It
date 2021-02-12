@@ -1,7 +1,9 @@
-package io.github.mnitek.servit.security;
+package io.github.mnitek.servit;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,18 +17,15 @@ import java.util.Collection;
 
 @Data
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+@RequiredArgsConstructor
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String username;
-    private String password;
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+    private final String username;
+    private final String password;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

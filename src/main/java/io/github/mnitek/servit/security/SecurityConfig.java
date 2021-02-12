@@ -7,46 +7,41 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserService userService;
+    private UserDetailsService userDetailsService;
 
     @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
+    public PasswordEncoder passwordEncoder() {
+        return new StandardPasswordEncoder("53cr3t");
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
-                .passwordEncoder(encoder());
+        auth
+                .userDetailsService(userDetailsService);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http
-            .csrf()
-                .disable()
-            .authorizeRequests()
-              .antMatchers("/recipes", "/newRecipeForm")
+                .authorizeRequests()
+                .antMatchers("/", "/recipes", "/recipes/**")
                 .access("hasRole('ROLE_USER')")
-              .antMatchers("/", "/**").access("permitAll")
-            .and()
-              .formLogin()
+                .antMatchers("/register", "/login").access("permitAll")
+                .and()
+                .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/", true)
-            .and()
-              .logout()
+                .and()
+                .logout()
                 .logoutSuccessUrl("/login");
+
     }
 }
-
-
-
-
