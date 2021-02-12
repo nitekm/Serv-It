@@ -1,5 +1,6 @@
 package io.github.mnitek.servit.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private UserService userService;
 
     @Bean
     public PasswordEncoder encoder() {
@@ -20,31 +23,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService())
+        auth.userDetailsService(userService)
                 .passwordEncoder(encoder());
-        //Default in memory user and pass
-        auth.inMemoryAuthentication()
-                .withUser("user")
-                .password("user")
-                .authorities("ROLE_USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
-                .authorizeRequests()
-                .antMatchers("/recipes", "/newRecipeForm")
+            .csrf()
+                .disable()
+            .authorizeRequests()
+              .antMatchers("/recipes", "/newRecipeForm")
                 .access("hasRole('ROLE_USER')")
-                .antMatchers("/", "/**").access("permitAll")
-                .and()
-                .formLogin()
+              .antMatchers("/", "/**").access("permitAll")
+            .and()
+              .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/index")
-                .and()
-        .logout()
-        .logoutSuccessUrl("/")
-        .and()
-        .csrf()
-        .disable();
+                .defaultSuccessUrl("/", true)
+            .and()
+              .logout()
+                .logoutSuccessUrl("/login");
     }
 }
+
+
+
+
