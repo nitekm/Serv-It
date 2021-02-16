@@ -1,4 +1,4 @@
-package io.github.mnitek.servit;
+package io.github.mnitek.servit.security;
 
 import lombok.AccessLevel;
 import lombok.Data;

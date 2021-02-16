@@ -18,12 +18,12 @@ public class RecipeService {
     @Transactional
     public void togglePlanned(int id) {
         if (!recipeRepo.existsById(id)) {
-            log.warn("Not planned");
+            log.warn("Recipe with id " + id + "does not exists");
             throw new IllegalArgumentException("Recipe with given id does not exist");
         }
         recipeRepo.findById(id).ifPresent(recipe -> recipe.setPlanned(!recipe.isPlanned()));
         recipeRepo.findById(id).ifPresent(Recipe::toggleIngredients);
-        log.info("Planned");
+        log.info(recipeRepo.findById(id).orElse(null) + " planned");
     }
 
     public void deleteRecipe(int id) {

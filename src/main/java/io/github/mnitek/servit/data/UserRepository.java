@@ -1,6 +1,6 @@
 package io.github.mnitek.servit.data;
 
-import io.github.mnitek.servit.User;
+import io.github.mnitek.servit.security.User;
 import org.springframework.data.repository.CrudRepository;
 
 

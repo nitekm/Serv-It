@@ -11,6 +11,9 @@
         .center {
             text-align: center;
         }
+        .C\(red\) {
+            color: red;
+        }
     </style>
 </head>
 <body class="center">
@@ -28,6 +31,7 @@
 
     <label for="confirm">Potwierdź hasło</label>
     <input type="password" name="confirm" id="confirm"/>
+    <span class="C(red)" th:if="password != confirm">Hasła nie są jednakowe</span>
 
     <button type="submit">Zarejestruj się</button>
 </form>

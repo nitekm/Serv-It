@@ -5,8 +5,10 @@ import io.github.mnitek.servit.logic.RecipeService;
 import io.github.mnitek.servit.model.Ingredient;
 import io.github.mnitek.servit.model.Recipe;
 import io.github.mnitek.servit.model.Step;
+import io.github.mnitek.servit.security.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -51,9 +53,10 @@ public class RecipeController {
     }
 
     @PostMapping
-    public String addNewRecipe(@Valid Recipe recipe, Errors errors) {
+    public String addNewRecipe(@Valid Recipe recipe, Errors errors, @AuthenticationPrincipal User user) {
         if (errors.hasErrors()) return "newRecipeForm";
-        log.info("Added new recipe " + recipe);
+        recipe.setUser(user);
+        log.info("Adding new recipe: " + recipe);
         recipeRepo.save(recipe);
         return "redirect:/";
     }
@@ -79,6 +82,19 @@ public class RecipeController {
     @GetMapping("delete/{id}")
         public String deleteRecipe(@PathVariable("id") int id) {
         recipeService.deleteRecipe(id);
+        return "redirect:/recipes";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditRecipeForm(@PathVariable("id") int id, Model model) {
+        Recipe recipe = recipeRepo.findById(id).orElse(null);
+        model.addAttribute("recipe", recipe);
+        return "newRecipeForm";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editRecipe(@PathVariable("id") int id, Recipe recipe) {
+        recipeRepo.save(recipe);
         return "redirect:/recipes";
     }
 

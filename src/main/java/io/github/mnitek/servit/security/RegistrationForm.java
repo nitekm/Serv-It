@@ -1,6 +1,5 @@
 package io.github.mnitek.servit.security;
 
-import io.github.mnitek.servit.User;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

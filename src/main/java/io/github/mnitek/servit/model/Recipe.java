@@ -1,5 +1,6 @@
 package io.github.mnitek.servit.model;
 
+import io.github.mnitek.servit.security.User;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,6 +26,8 @@ public class Recipe {
     private List<Step> steps = new ArrayList<>();
     private boolean planned;
     private LocalDateTime createdAt;
+    @ManyToOne
+    private User user;
 
     public Recipe() {
         steps.add(new Step());

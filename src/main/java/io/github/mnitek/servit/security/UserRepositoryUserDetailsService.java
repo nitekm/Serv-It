@@ -1,6 +1,5 @@
 package io.github.mnitek.servit.security;
 
-import io.github.mnitek.servit.User;
 import io.github.mnitek.servit.data.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

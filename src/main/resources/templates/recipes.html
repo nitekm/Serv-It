@@ -15,6 +15,13 @@
     </style>
 </head>
 <body>
+<fieldset>
+    <legend>Zaplanowane:</legend>
+    <div th:each="recipe:${recipes}" th:if="${recipe.planned == true}">
+        <span th:text="${recipe.name}"></span>
+        <a th:href="@{/recipes/plan/{id}(id=${recipe.id})}">Usuń z listy</a>
+    </div>
+</fieldset>
 <h2>Przepisy:</h2><br>
 <!--/*@thymesVar id="recipes" type="io.github.mnitek.servit.model.Recipe"*/-->
 <ul th:each="recipe:${recipes}">
@@ -28,6 +35,9 @@
                 <form class="inline" th:action="@{/recipes/plan/{id}(id=${recipe.id})}">
                     <button type="submit">Zaplanuj</button>
                 </form>
+            <form class="inline"  method="get" th:action="@{/recipes/edit/{id}(id=${recipe.id})}">
+                <button class="inline" type="submit">Edytuj</button>
+            </form>
                 <form class="inline" th:action="@{/recipes/delete/{id}(id=${recipe.id})}">
                     <button class="inline" type="submit">Usuń</button>
                 </form>
