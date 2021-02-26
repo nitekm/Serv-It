@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -89,7 +88,7 @@ public class RecipeController {
     public String showEditRecipeForm(@PathVariable("id") int id, Model model) {
         Recipe recipe = recipeRepo.findById(id).orElse(null);
         model.addAttribute("recipe", recipe);
-        return "newRecipeForm";
+        return "editRecipeForm";
     }
 
     @PostMapping("/edit/{id}")
@@ -103,7 +102,7 @@ public class RecipeController {
     */
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Recipe> getAllrecipes() {
+    public List<Recipe> getAllRecipes() {
         return recipeRepo.findAll();
     }
 }

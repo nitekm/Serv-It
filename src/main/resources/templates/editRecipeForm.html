@@ -15,8 +15,8 @@
 </head>
 <body>
 <fieldset>
-    <h2>Nowy przepis</h2>
-    <form method="post" th:action="@{/recipes}" th:object="${recipe}">
+    <h2>Edytuj przepis</h2>
+    <form method="post" th:action="@{/recipes/edit/{id}(id=${recipe.id})}" th:object="${recipe}">
         <legend>Nazwa</legend>
         <input type="text" th:field="*{name}" />
         <small class="C(red)" th:if="${#fields.hasErrors('name')}"
@@ -31,8 +31,6 @@
         <!--/*@thymesVar id="ingredients" type="io.github.mnitek.servit.model.Recipe"*/-->
         <fieldset th:each="ingredient, iStat:${recipe.ingredients}">
             <input type="text" th:field="*{ingredients[__${iStat.index}__].name}">
-            <small class="C(red)" th:if="${#fields.hasErrors('ingredients')}"
-                   th:errors="*{ingredients}">...</small><br>
         </fieldset>
         <div><button type="submit" name="addIngredient">+</button></div>
         <br>
@@ -41,12 +39,10 @@
         <fieldset th:each="step, sStat:${recipe.steps}">
             <legend th:text="|Krok ${sStat.index+1}|"></legend>
             <input type="text" th:field="*{steps[__${sStat.index}__].description}">
-            <small class="C(red)" th:if="${#fields.hasErrors('steps')}"
-                   th:errors="*{steps}">...</small><br>
         </fieldset>
         <div><button type="submit" name="addStep">+</button></div>
 
-        <button type="submit">Dodaj przepis</button>
+        <button type="submit">Zapisz przepis</button>
 
     </form>
 </fieldset>

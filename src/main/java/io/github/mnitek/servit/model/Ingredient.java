@@ -16,7 +16,6 @@ public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotBlank(message = "To pole nie może być puste")
     private String name;
     private boolean planned;
 }

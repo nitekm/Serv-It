@@ -5,6 +5,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,8 +22,10 @@ public class Recipe {
     private String name;
     @Pattern(regexp = "^[0-9]:[0-5][0-9]$", message = "Czas przygotowania musi być w formacie H:mm")
     private String timeToPrepare;
+    @NotEmpty(message = "Przepis musi składać się z co najmniej jednego kroku")
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Ingredient> ingredients = new ArrayList<>();
+    @NotEmpty(message = "Przepis musi składać się z co najmniej jednego kroku")
     @OneToMany(cascade = CascadeType.ALL)
     private List<Step> steps = new ArrayList<>();
     private boolean planned;

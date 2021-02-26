@@ -16,6 +16,5 @@ public class Step {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotBlank(message = "To pole nie może być puste")
     private String description;
 }
