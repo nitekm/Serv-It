@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+/*
 @Service
 public class IngredientService {
     @Autowired
-    private WebClient webClient;
+    //private WebClient webClient;
     private IngredientRepository ingredientRepository;
 
 
@@ -37,3 +37,4 @@ public class IngredientService {
                 .bodyToMono(Ingredient.class);
     }
 }
+*/

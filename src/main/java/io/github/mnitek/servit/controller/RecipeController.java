@@ -5,10 +5,8 @@ import io.github.mnitek.servit.logic.RecipeService;
 import io.github.mnitek.servit.model.Ingredient;
 import io.github.mnitek.servit.model.Recipe;
 import io.github.mnitek.servit.model.Step;
-import io.github.mnitek.servit.security.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -52,9 +50,8 @@ public class RecipeController {
     }
 
     @PostMapping
-    public String addNewRecipe(@Valid Recipe recipe, Errors errors, @AuthenticationPrincipal User user) {
+    public String addNewRecipe(@Valid Recipe recipe, Errors errors) {
         if (errors.hasErrors()) return "newRecipeForm";
-        recipe.setUser(user);
         log.info("Adding new recipe: " + recipe);
         recipeRepo.save(recipe);
         return "redirect:/";

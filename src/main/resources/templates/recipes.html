@@ -12,13 +12,18 @@
             display:inline-block;
             margin-right:5px;
         }
+
+        .Plan {
+            font-size: large;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 <fieldset>
     <legend>Zaplanowane:</legend>
     <div th:each="recipe:${recipes}" th:if="${recipe.planned == true}">
-        <span th:text="${recipe.name}"></span>
+        <span class="Plan" th:text="${recipe.name}"></span>
         <a th:href="@{/recipes/plan/{id}(id=${recipe.id})}">Usuń z listy</a>
     </div>
 </fieldset>
