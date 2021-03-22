@@ -6,14 +6,14 @@ import io.github.mnitek.servit.model.Ingredient;
 import io.github.mnitek.servit.model.Recipe;
 import io.github.mnitek.servit.model.Step;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 @Slf4j
@@ -28,7 +28,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping
     public String showAllRecipes(Model model) {
         log.info("Exposing all recipes");
         model.addAttribute("recipes", recipeRepo.findAll());
@@ -37,8 +37,9 @@ public class RecipeController {
 
     @GetMapping("/{id}")
     public String getSingleRecipe(@PathVariable("id") int id, Model model) {
-        Recipe recipe = recipeRepo.findById(id).orElse(null);
-        log.info("Exposing recipe: " + recipe);
+        Recipe recipe = recipeRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Recipe with given id not found"));
+        log.info("Exposing recipe: [" + recipe.getName() + "]");
         model.addAttribute("recipe", recipe);
         return "singleRecipe";
     }
@@ -52,7 +53,7 @@ public class RecipeController {
     @PostMapping
     public String addNewRecipe(@Valid Recipe recipe, Errors errors) {
         if (errors.hasErrors()) return "newRecipeForm";
-        log.info("Adding new recipe: " + recipe);
+        log.info("Adding new recipe: [" + recipe.getName() + "]");
         recipeRepo.save(recipe);
         return "redirect:/";
     }
@@ -63,12 +64,25 @@ public class RecipeController {
         return "/newRecipeForm";
     }
 
+    @PostMapping(params = "removeStep")
+    public String removeRecipeStep(@ModelAttribute("recipe") Recipe currentRecipe) {
+        currentRecipe.getSteps().remove(currentRecipe.getSteps().size()-1);
+        return "/newRecipeForm";
+    }
+
     @PostMapping(params = "addIngredient")
     public String addRecipeIngredient(@ModelAttribute("recipe") Recipe currentRecipe) {
         currentRecipe.getIngredients().add(new Ingredient());
         return "newRecipeForm";
     }
 
+    @PostMapping(params = "removeIngredient")
+    public String removeRecipeIngredient(@ModelAttribute("recipe") Recipe currentRecipe) {
+        currentRecipe.getSteps().remove(currentRecipe.getIngredients().size()-1);
+        return "/newRecipeForm";
+    }
+
+    @Transactional
     @GetMapping("/plan/{id}")
     public String togglePlanned(@PathVariable("id") int id) {
         recipeService.togglePlanned(id);
@@ -76,30 +90,31 @@ public class RecipeController {
     }
 
     @GetMapping("delete/{id}")
-        public String deleteRecipe(@PathVariable("id") int id) {
+    public String deleteRecipe(@PathVariable("id") int id) {
         recipeService.deleteRecipe(id);
         return "redirect:/recipes";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditRecipeForm(@PathVariable("id") int id, Model model) {
-        Recipe recipe = recipeRepo.findById(id).orElse(null);
+        Recipe recipe = recipeRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Recipe with given id not found"));
         model.addAttribute("recipe", recipe);
         return "editRecipeForm";
     }
 
     @PostMapping("/edit/{id}")
-    public String editRecipe(@PathVariable("id") int id, Recipe recipe) {
-        recipeRepo.save(recipe);
+    public String editRecipe(@PathVariable("id") int id, @Valid Recipe toUpdate, Errors errors) {
+        if (errors.hasErrors()) return "newRecipeForm";
+        recipeRepo.findById(id).ifPresent(recipe -> {
+            recipe.updateRecipe(toUpdate);
+            recipeRepo.save(recipe);
+        });
         return "redirect:/recipes";
     }
 
-    /*
-    * JSON responses for POSTMAN testing
-    */
-    @ResponseBody
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Recipe> getAllRecipes() {
-        return recipeRepo.findAll();
+    @ExceptionHandler(IllegalArgumentException.class)
+    ResponseEntity<?> handleIllegalArgument(IllegalArgumentException e) {
+        return ResponseEntity.notFound().build();
     }
 }

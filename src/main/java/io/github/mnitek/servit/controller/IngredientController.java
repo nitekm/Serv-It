@@ -1,31 +1,28 @@
 package io.github.mnitek.servit.controller;
 
-//import io.github.mnitek.servit.logic.IngredientService;
-import io.github.mnitek.servit.model.Ingredient;
+import io.github.mnitek.servit.data.IngredientRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-/*
+
 @Controller
+@Slf4j
 @RequestMapping("/ingredients")
 public class IngredientController {
-    private IngredientService service;
+    private IngredientRepository repository;
+
+    IngredientController(final IngredientRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping
-    public Flux<Ingredient> getAllIngredients () {
-        return service.getAllIngredients();
+    String showAllPlannedIngredients (Model model) {
+        log.info("Exposing all planned ingredients");
+        model.addAttribute("ingredients", repository.findAllPlanned());
+        return "ingredients";
     }
-
-    @PostMapping
-    public Mono<Ingredient> createIngredientsTasks(@RequestBody Ingredient ingredient) {
-        return service.createIngredientsTasks(ingredient);
-    }
-
-
 }
 
- */
+

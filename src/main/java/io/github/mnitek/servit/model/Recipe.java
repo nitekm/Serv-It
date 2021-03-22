@@ -7,13 +7,10 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
@@ -41,19 +38,20 @@ public class Recipe {
         ingredients.add(new Ingredient());
     }
 
-    //test
-    public Recipe(String name) {
-        this.name = name;
+    public void toggleIngredients() {
+        ingredients.forEach(ingredient -> ingredient.setPlanned(!isPlanned()));
+    }
+
+    public void updateRecipe(Recipe update) {
+        name = update.name;
+        timeToPrepare = update.timeToPrepare;
+        ingredients = update.ingredients;
+        steps = update.steps;
+        //planned = update.planned;
     }
 
     @PrePersist
     public void setCreatedAt() {
         createdAt = LocalDateTime.now();
-    }
-
-    public void toggleIngredients() {
-        for (Ingredient i:ingredients) {
-            i.setPlanned(!i.isPlanned());
-        }
     }
 }

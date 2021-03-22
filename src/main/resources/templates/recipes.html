@@ -26,6 +26,10 @@
         <span class="Plan" th:text="${recipe.name}"></span>
         <a th:href="@{/recipes/plan/{id}(id=${recipe.id})}">Usuń z listy</a>
     </div>
+    <br>
+    <form class="inline" method="get" th:action="@{/ingredients}">
+        <button type="submit">Lista zakupów</button>
+    </form>
 </fieldset>
 <h2>Przepisy:</h2><br>
 <!--/*@thymesVar id="recipes" type="io.github.mnitek.servit.model.Recipe"*/-->

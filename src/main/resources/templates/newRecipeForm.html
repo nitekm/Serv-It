@@ -18,33 +18,40 @@
     <h2>Nowy przepis</h2>
     <form method="post" th:action="@{/recipes}" th:object="${recipe}">
         <legend>Nazwa</legend>
-        <input type="text" th:field="*{name}" />
+        <input type="text" th:field="*{name}"/>
         <small class="C(red)" th:if="${#fields.hasErrors('name')}"
-              th:errors="*{name}">...</small>
+               th:errors="*{name}">...</small>
 
         <legend>Czas przygotowania</legend>
         <input type="text" th:field="*{timeToPrepare}"/>
         <small class="C(red)" th:if="${#fields.hasErrors('timeToPrepare')}"
-              th:errors="*{timeToPrepare}">...</small><br>
+               th:errors="*{timeToPrepare}">...</small><br>
 
         <legend>Składniki</legend>
         <!--/*@thymesVar id="ingredients" type="io.github.mnitek.servit.model.Recipe"*/-->
         <fieldset th:each="ingredient, iStat:${recipe.ingredients}">
             <input type="text" th:field="*{ingredients[__${iStat.index}__].name}">
-            <small class="C(red)" th:if="${#fields.hasErrors('ingredients')}"
-                   th:errors="*{ingredients}">...</small><br>
+            <small class="C(red)" th:if="${#fields.hasAnyErrors()}"
+                   th:errors="*{ingredients[__${iStat.index}__].name}">...</small><br>
         </fieldset>
-        <div><button type="submit" name="addIngredient">+</button></div>
+        <div>
+            <button type="submit" name="addIngredient">+</button>
+            <button type="submit" name="removeIngredient">-</button>
+        </div>
         <br>
 
         <!--/*@thymesVar id="steps" type="io.github.mnitek.servit.model.Recipe"*/-->
         <fieldset th:each="step, sStat:${recipe.steps}">
             <legend th:text="|Krok ${sStat.index+1}|"></legend>
             <input type="text" th:field="*{steps[__${sStat.index}__].description}">
-            <small class="C(red)" th:if="${#fields.hasErrors('steps')}"
-                   th:errors="*{steps}">...</small><br>
+            <small class="C(red)" th:if="${#fields.hasAnyErrors()}"
+                   th:errors="*{steps[__${sStat.index}__].description}">...</small><br>
         </fieldset>
-        <div><button type="submit" name="addStep">+</button></div>
+        <div>
+            <button type="submit" name="addStep">+</button>
+            <button type="submit" name="removeStep">-</button>
+        </div>
+        <br>
 
         <button type="submit">Dodaj przepis</button>
 

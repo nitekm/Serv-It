@@ -32,7 +32,10 @@
         <fieldset th:each="ingredient, iStat:${recipe.ingredients}">
             <input type="text" th:field="*{ingredients[__${iStat.index}__].name}">
         </fieldset>
-        <div><button type="submit" name="addIngredient">+</button></div>
+        <div>
+            <button type="submit" name="addIngredient">+</button>
+            <button type="submit" name="removeIngredient">-</button>
+        </div>
         <br>
 
         <!--/*@thymesVar id="steps" type="io.github.mnitek.servit.model.Recipe"*/-->
@@ -40,7 +43,10 @@
             <legend th:text="|Krok ${sStat.index+1}|"></legend>
             <input type="text" th:field="*{steps[__${sStat.index}__].description}">
         </fieldset>
-        <div><button type="submit" name="addStep">+</button></div>
+        <div>
+            <button type="submit" name="addStep">+</button>
+            <button type="submit" name="removeStep">-</button>
+        </div><br>
 
         <button type="submit">Zapisz przepis</button>
 

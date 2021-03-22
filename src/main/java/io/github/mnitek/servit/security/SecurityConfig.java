@@ -29,7 +29,6 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         KeycloakAuthenticationProvider keycloakProvider = keycloakAuthenticationProvider();
         keycloakProvider.setGrantedAuthoritiesMapper(authorityMapper);
         auth.authenticationProvider(keycloakProvider);
-
     }
 
     @Override
@@ -40,8 +39,8 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-                //.antMatchers("/recipes", "/recipes/*")
-                //.hasRole("USER")
+                .antMatchers("/recipes", "/recipes/*")
+                .hasRole("USER")
                 .anyRequest()
                 .permitAll();
     }

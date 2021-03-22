@@ -14,7 +14,7 @@ public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotBlank(message = "Przepis musi składać się z co najmniej jednego składnika")
+    @NotBlank(message = "Nazwa składnika nie może być pusta")
     private String name;
     private boolean planned;
     @ManyToOne
