@@ -2,39 +2,37 @@ package io.github.mnitek.servit.logic;
 
 import io.github.mnitek.servit.data.IngredientRepository;
 import io.github.mnitek.servit.model.Ingredient;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.github.mnitek.servit.model.Task;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-/*
+
 @Service
 public class IngredientService {
-    @Autowired
-    //private WebClient webClient;
+
+    private WebClient webClient;
     private IngredientRepository ingredientRepository;
 
 
-    public IngredientService(IngredientRepository ingredientRepository) {
+    public IngredientService(final WebClient webClient, IngredientRepository ingredientRepository) {
+        this.webClient = webClient;
         this.ingredientRepository = ingredientRepository;
     }
 
-    public Flux<Ingredient> getAllIngredients() {
-        return webClient.get()
-                .uri("/tasks/view_all.json")
-                .accept(MediaType.APPLICATION_JSON)
+    public Mono<Task> createIngredientTask(Task task, Ingredient ingredient) {
+        var todo = task.ingredientToTask(ingredient);
+        return webClient.post()
+                .body(Mono.just(todo), Task.class)
                 .retrieve()
-                .bodyToFlux(Ingredient.class);
+                .bodyToMono(Task.class);
     }
 
-    public Mono<Ingredient> createIngredientsTasks(Ingredient ingredient) {
-        return webClient.post()
-                .uri("tasks/create.json")
-                .accept(MediaType.APPLICATION_JSON)
-                .body(Mono.just(ingredient), Ingredient.class)
+    public Flux<Task> getAllTasks() {
+        return webClient.get()
+                .uri("/projects")
                 .retrieve()
-                .bodyToMono(Ingredient.class);
+                .bodyToFlux(Task.class);
     }
 }
-*/
