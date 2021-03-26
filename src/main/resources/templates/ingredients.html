@@ -20,7 +20,7 @@
 <ul th:each="i:${ingredients}">
         <li th:text="${i.name}"></li>
 </ul>
-<form class="inline" method="post" th:action="@{/ingredients/tolist}">
+<form class="inline" method="post" th:action="@{/ingredients/toList}">
     <button type="submit">Stwórz listę zakupów</button>
 </form>
 </body>
