@@ -1,41 +1,49 @@
 package io.github.mnitek.servit.logic;
 
 import io.github.mnitek.servit.data.IngredientRepository;
+import io.github.mnitek.servit.data.RecipeRepository;
 import io.github.mnitek.servit.model.Ingredient;
 import io.github.mnitek.servit.model.Task;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class IngredientService {
 
-    private WebClient webClient;
+    private RestTemplate restTemplate;
     private IngredientRepository ingredientRepository;
+    private RecipeRepository recipeRepository;
+    private String url = "https://api.todoist.com/rest/v1/tasks";
+    private String token = "Bearer 518f2340684199ab4d745ca2fbb7a2067079fccb";
 
 
-    public IngredientService(final WebClient webClient, IngredientRepository ingredientRepository) {
-        this.webClient = webClient;
+    public IngredientService(final RestTemplate restTemplate, final IngredientRepository ingredientRepository, final RecipeRepository recipeRepository) {
+        this.restTemplate = restTemplate;
         this.ingredientRepository = ingredientRepository;
+        this.recipeRepository = recipeRepository;
     }
 
-    public Mono<Task> createIngredientTask(Task task, Ingredient ingredient) {
-        var todo = task.ingredientToTask(ingredient);
-        return webClient.post()
-                .body(Mono.just(todo), Task.class)
-                .retrieve()
-                .bodyToMono(Task.class);
-    }
+    public void createIngredientsTasks() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        headers.set(HttpHeaders.AUTHORIZATION, token);
 
-    public Flux<Task> getAllTasks() {
-        return webClient.get()
-                .uri("/projects")
-                .retrieve()
-                .bodyToFlux(Task.class);
+        ingredientRepository.findAllPlanned()
+                .forEach(ingredient -> {
+                    Task task = new Task();
+                    task.ingredientToTask(ingredient);
+                    log.info(task + " created");
+                    HttpEntity<Task> request = new HttpEntity<>(task, headers);
+                    restTemplate.postForEntity(url, request, Task.class);
+                });
+        recipeRepository.findAll().forEach(recipe -> recipe.setPlanned(false));
     }
 
     public List<Ingredient> getAllPlannedIngredients() {
