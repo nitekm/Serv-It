@@ -20,8 +20,8 @@ public class ServItApplication {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-                recipeRepository.save(new Recipe("Schabowy"));
-                recipeRepository.save(new Recipe("mielony"));
+                recipeRepository.save(new Recipe("Taco"));
+                recipeRepository.save(new Recipe("Pizza"));
                 recipeRepository.save(new Recipe("spaghetii"));
                 recipeRepository.save(new Recipe("blablabla"));
             }
