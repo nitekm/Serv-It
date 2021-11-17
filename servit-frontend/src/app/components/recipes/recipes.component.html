@@ -1,0 +1,17 @@
+<div>
+  Przepisy:
+  <div>
+    <ul *ngFor="let recipe of recipesList;">
+      <li>
+        <div>
+          <h5>{{recipe.name}}</h5> <button (click)="showDetails()">i</button>
+          Czas przygotowania: {{recipe.timeToPrepare}} <br>
+          <button>Zaplanuj</button>
+          <button>Edytuj</button>
+          <button>Usuń</button>
+          <app-single-recipe *ngIf="recipe.detailsVisible" [recipe]="recipe" (detailsEvent)="hideDetails($event)"></app-single-recipe>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

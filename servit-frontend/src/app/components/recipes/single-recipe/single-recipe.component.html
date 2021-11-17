@@ -1,0 +1,20 @@
+<div>
+  <h2>{{recipe.name}}</h2>
+  <p>Czas przygotowania: {{recipe.timeToPrepare}}</p>
+  <div>
+    <div>
+      <h4>Składniki:</h4>
+      <ul *ngFor="let ingredient of recipe.ingredients">
+        <li>{{ingredient.name}}</li>
+      </ul>
+    </div>
+    <p></p>
+    <div>
+      <h4>Przygotowanie:</h4>
+      <ul *ngFor="let step of recipe.steps">
+        <li>{{step.description}}</li>
+      </ul>
+    </div>
+  </div>
+  <button (click)="hideDetails()">^</button>
+</div>
