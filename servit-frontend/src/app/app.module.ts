@@ -9,13 +9,15 @@ import {HttpClientModule} from "@angular/common/http";
 import { SingleRecipeComponent } from './components/recipes/single-recipe/single-recipe.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ReactiveFormsModule} from "@angular/forms";
+import { IngredientListComponent } from './components/ingredient-list/ingredient-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RecipesComponent,
     AddRecipeComponent,
-    SingleRecipeComponent
+    SingleRecipeComponent,
+    IngredientListComponent
   ],
   imports: [
     BrowserModule,
