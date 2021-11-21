@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {RecipeService} from "../../service/recipe.service";
 import {Recipe} from "../../models/recipe";
@@ -11,18 +11,38 @@ import {Router} from "@angular/router";
   templateUrl: './add-recipe.component.html',
   styleUrls: ['./add-recipe.component.scss']
 })
-export class AddRecipeComponent implements OnInit {
+export class AddRecipeComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder, private recipeService: RecipeService, private router: Router) { }
   recipeForm: FormGroup;
+  recipe: Recipe;
 
   ngOnInit(): void {
-    this.recipeForm = this.formBuilder.group({
-      name: [''],
-      timeToPrepare: [''],
-      ingredients: this.formBuilder.array([]),
-      steps: this.formBuilder.array([])
-    });
+    this.recipe = this.recipeService.recipe;
+    if (this.recipe != undefined) {
+
+      let ingredientArray = new Array<string>();
+      this.recipe.ingredients.forEach(ingredient =>
+      ingredientArray.push(ingredient.name));
+
+      let stepArray = new Array<string>();
+      this.recipe.steps.forEach(step =>
+        stepArray.push(step.description));
+
+      this.recipeForm = this.formBuilder.group({
+        name: [this.recipe.name],
+        timeToPrepare: [this.recipe.timeToPrepare],
+        ingredients: this.formBuilder.array(ingredientArray),
+        steps: this.formBuilder.array(stepArray),
+      });
+    } else {
+      this.recipeForm = this.formBuilder.group({
+        name: [''],
+        timeToPrepare: [''],
+        ingredients: this.formBuilder.array([]),
+        steps: this.formBuilder.array([])
+      });
+    }
   }
 
   addIngredient() {
@@ -77,12 +97,15 @@ export class AddRecipeComponent implements OnInit {
       ingredients,
       steps
     );
-
     return recipe;
   }
 
   onSubmit() {
     this.recipeService.addRecipe(this.createRecipe());
     this.router.navigate(['/recipes']);
+  }
+
+  ngOnDestroy(): void {
+    this.recipeService.recipeUnassign();
   }
 }

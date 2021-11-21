@@ -11,6 +11,7 @@ import {core} from "@angular/compiler";
 })
 export class RecipeService {
   url: string = environment.baseUrl + Endpoints.RECIPES;
+  private recipeToEdit: Recipe;
   private refreshNeeded = new Subject<void>();
   errorOccurred = new Subject<void>();
 
@@ -18,6 +19,19 @@ export class RecipeService {
 
   get getRefreshNeeded() {
     return this.refreshNeeded;
+  }
+
+  get recipe(): Recipe {
+    return this.recipeToEdit;
+  }
+
+  passRecipe(recipe: Recipe): Recipe {
+    this.recipeToEdit = recipe;
+    return this.recipeToEdit;
+  }
+
+  recipeUnassign(): void {
+    this.recipeToEdit = undefined;
   }
 
   getAllRecipes(): Observable<Array<Recipe>> {
