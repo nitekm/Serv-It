@@ -1,5 +1,12 @@
 <div>
-  <h2>{{recipe.name}}</h2>
+  <h5 (click)="toggleDetailsView()">{{recipe.name}}</h5> <button (click)="toggleDetailsView()">i</button>
+  Czas przygotowania: {{recipe.timeToPrepare}} <br>
+  <button (click)="onPlanClick(recipe.id)">Zaplanuj</button>
+  <button (click)="onEditClick(recipe.id)">Edytuj</button>
+  <button (click)="onDeleteClick(recipe.id)">Usuń</button>
+</div>
+
+<div *ngIf="detailsVisible">
   <p>Czas przygotowania: {{recipe.timeToPrepare}}</p>
   <div>
     <div>
@@ -16,5 +23,5 @@
       </ul>
     </div>
   </div>
-  <button (click)="hideDetails()">^</button>
+  <button (click)="toggleDetailsView()">^</button>
 </div>

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ServIt.iml" filepath="$PROJECT_DIR$/ServIt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ServIt.iml" filepath="$PROJECT_DIR$/.idea/ServIt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/servit-backend/servit.iml" filepath="$PROJECT_DIR$/servit-backend/servit.iml" />
     </modules>
   </component>
 </project>

@@ -1,2 +1,2 @@
-export interface Task {
+export class Task {
 }

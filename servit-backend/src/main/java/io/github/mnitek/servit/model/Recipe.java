@@ -2,6 +2,7 @@ package io.github.mnitek.servit.model;
 
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -36,6 +37,10 @@ public class Recipe {
     public Recipe() {
         steps.add(new Step());
         ingredients.add(new Ingredient());
+    }
+
+    public Recipe(String name) {
+        this.name = name;
     }
 
     public void toggleIngredients() {

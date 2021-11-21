@@ -1,7 +1,11 @@
 import {Recipe} from "./recipe";
 
-export interface Step {
+export class Step {
   id: number;
   description: string;
-  recipe: Recipe;
+  recipe?: Recipe;
+
+  constructor(description: string) {
+    this.description = description;
+  }
 }
