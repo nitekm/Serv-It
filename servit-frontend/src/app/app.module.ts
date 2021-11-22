@@ -10,6 +10,7 @@ import { SingleRecipeComponent } from './components/recipes/single-recipe/single
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ReactiveFormsModule} from "@angular/forms";
 import { IngredientListComponent } from './components/ingredient-list/ingredient-list.component';
+import { PlannedRecipesComponent } from './components/planned-recipes/planned-recipes.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { IngredientListComponent } from './components/ingredient-list/ingredient
     RecipesComponent,
     AddRecipeComponent,
     SingleRecipeComponent,
-    IngredientListComponent
+    IngredientListComponent,
+    PlannedRecipesComponent
   ],
   imports: [
     BrowserModule,

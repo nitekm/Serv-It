@@ -38,6 +38,10 @@ export class RecipeService {
     return this.http.get<Array<Recipe>>(this.url);
   }
 
+  getPlannedRecipes() {
+    return this.http.get<Array<Recipe>>(this.url + 'planned');
+  }
+
   getSingleRecipe(id: number): Observable<Recipe> {
     return this.http.get<Recipe>(this.url + 'id')
   }

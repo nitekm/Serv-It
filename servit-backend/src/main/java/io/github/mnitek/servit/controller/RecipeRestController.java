@@ -24,6 +24,11 @@ public class RecipeRestController {
         return ResponseEntity.ok(recipeRepository.findAll());
     }
 
+    @GetMapping("/planned")
+    public ResponseEntity<List<Recipe>> getAllPlannedRecipes() {
+        return ResponseEntity.ok(recipeRepository.findAllPlanned());
+    }
+
     @PostMapping
     public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe) {
         var newRecipe = recipeRepository.save(recipe);

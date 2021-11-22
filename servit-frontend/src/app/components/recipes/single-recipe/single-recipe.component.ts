@@ -33,7 +33,7 @@ export class SingleRecipeComponent implements OnInit {
     this.recipeService.deleteRecipe(id);
   }
 
-  onEditClick(id: number) {
+  onEditClick() {
     this.recipeService.passRecipe(this.recipe);
     this.router.navigate(['/add-recipe']);
   }
