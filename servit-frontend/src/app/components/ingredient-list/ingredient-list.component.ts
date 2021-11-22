@@ -13,7 +13,12 @@ export class IngredientListComponent implements OnInit {
   constructor(private ingredientService: IngredientService) {}
 
   ngOnInit(): void {
-
+    this.getPlannedRecipes();
   }
 
+  getPlannedRecipes() {
+    this.ingredientService.getPlannedIngredients()
+      .subscribe(ingredients => this.ingredientList = ingredients);
+    console.log(this.ingredientList);
+  }
 }
