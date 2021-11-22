@@ -10,4 +10,5 @@ import java.util.List;
 public interface IngredientRepository {
 
     List<Ingredient> findAllPlanned();
+    List<Ingredient> findAllPlannedOrderByName();
 }

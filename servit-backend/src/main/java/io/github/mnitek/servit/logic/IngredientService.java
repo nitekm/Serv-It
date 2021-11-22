@@ -47,7 +47,7 @@ public class IngredientService {
     }
 
     public List<Ingredient> getAllPlannedIngredients() {
-        return ingredientRepository.findAllPlanned();
+        return ingredientRepository.findAllPlannedOrderByName();
     }
 
 }

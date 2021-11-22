@@ -13,4 +13,8 @@ interface SqlIngredientRepository extends IngredientRepository, JpaRepository<In
     @Override
     @Query("select distinct i from Ingredient i where i.planned=true ")
     List<Ingredient> findAllPlanned();
+
+    @Override
+    @Query("select distinct i from Ingredient i where i.planned=true order by i.name")
+    List<Ingredient> findAllPlannedOrderByName();
 }
