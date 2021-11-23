@@ -31,13 +31,13 @@
 
 
     <div *ngIf="detailsVisible" class="card-body row">
-      <div class="col-6">
+      <div class="col-5">
         <h5>Składniki:</h5>
         <ul *ngFor="let ingredient of recipe.ingredients">
           <li>{{ingredient.name}}</li>
         </ul>
       </div>
-      <div class="col-6">
+      <div class="col-7">
         <h5>Przygotowanie:</h5>
         <ul *ngFor="let step of recipe.steps">
           <li>{{step.description}}</li>
