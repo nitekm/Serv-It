@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RecipeService} from "../../service/recipe.service";
 import {Recipe} from "../../models/recipe";
 import {Router} from "@angular/router";
@@ -9,10 +9,9 @@ import {Router} from "@angular/router";
   styleUrls: ['./recipes.component.scss']
 })
 export class RecipesComponent implements OnInit {
-
   recipesList: Array<Recipe>;
 
-  constructor(private recipeService: RecipeService, private router: Router) { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
     this.recipeService.getRefreshNeeded
@@ -23,9 +22,5 @@ export class RecipesComponent implements OnInit {
   getAllRecipes() {
     this.recipeService.getAllRecipes()
       .subscribe(recipes => this.recipesList = recipes);
-  }
-
-  onAddNewRecipeClick() {
-    this.router.navigate(['add-recipe']);
   }
 }

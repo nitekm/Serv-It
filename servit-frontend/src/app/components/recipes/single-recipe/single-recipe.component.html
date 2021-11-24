@@ -5,6 +5,7 @@
         <h6>Czas przygotowania:</h6>
         <span class="lead text-danger">{{recipe.timeToPrepare}}</span>
       </div>
+
       <div class="col-8 text-center">
         <div class="btn-group btn-sm">
           <button class="btn btn-sm btn-outline-primary rounded-2 me-2" (click)="onPlanClick(recipe.id)">
@@ -13,7 +14,7 @@
           <button class="btn btn-outline-warning rounded-2 me-2" (click)="onEditClick()">
             <span><i class="bi bi-pen"></i></span> Edytuj
           </button>
-          <button class="btn btn-outline-danger rounded-2">
+          <button class="btn btn-outline-danger rounded-2" (click)="onDeleteClick(recipe.id)">
             <span><i class="bi bi-trash"></i></span> Usuń
           </button>
         </div>
@@ -25,7 +26,6 @@
         <span><i class="bi bi-chevron-compact-down"></i></span>
       </button>
     </div>
-
 
     <div *ngIf="detailsVisible" class="card-body row">
       <div class="col-5">
@@ -47,7 +47,6 @@
         <span><i class="bi bi-chevron-compact-up"></i></span>
       </button>
     </div>
-
 
   </div>
 

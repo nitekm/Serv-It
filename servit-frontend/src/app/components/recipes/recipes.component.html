@@ -1,22 +1,32 @@
-<h1 class="text-center bg-light text-decoration-underline mb-4">Serv It Application</h1>
-<div class="text-center mb-4">
-  <a routerLink="/add-recipe" class="btn btn-primary col-6 text-center p-2">
-    <span><i class="bi bi-plus-square"></i></span> Dodaj Przepis
-  </a>
-</div>
+<div>
+  <nav class="navbar sticky-top bg-light mb-3">
+    <div class="container-fluid">
+      <h1 class="navbar-brand text-decoration-underline text-secondary fw-bold">Serv It Application</h1>
+      <div class="justify-content-end col-2">
+        <a routerLink="/add-recipe" class="btn btn-primary text-center me-2">
+          <span><i class="bi bi-plus-square"></i></span> Dodaj Przepis</a>
+        <a href="#planned" class="btn btn-outline-info">
+          <span><i class="bi bi-arrow-up-square"></i></span> Zaplanowane
+        </a>
+      </div>
+    </div>
+  </nav>
 
-<div class="col text-center">
-  <h3><i class="bi bi-book"></i> Przepisy:</h3>
-</div>
+    <div class="col-12 d-flex justify-content-center mb-3">
+      <app-planned-recipes></app-planned-recipes>
+    </div>
 
-<div class="row">
+  <div class="col text-center">
+    <h3><i class="bi bi-book"></i> Przepisy:</h3>
+  </div>
+
+  <div class="row">
     <div *ngFor="let recipe of recipesList;" class="card-deck m-0 my-2 col-4">
       <div class="card border-3 border-primary rounded shadow-sm">
         <app-single-recipe [recipe]="recipe"></app-single-recipe>
       </div>
     </div>
   </div>
-<div class="col m-5 align-items-center">
-  <app-planned-recipes></app-planned-recipes>
+  <app-ingredient-list></app-ingredient-list>
 </div>
-<app-ingredient-list></app-ingredient-list>
+

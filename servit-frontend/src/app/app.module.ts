@@ -26,7 +26,8 @@ import { PlannedRecipesComponent } from './components/planned-recipes/planned-re
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
