@@ -10,13 +10,23 @@ import {Router} from "@angular/router";
 })
 export class RecipesComponent implements OnInit {
   recipesList: Array<Recipe>;
+  display = 'none';
 
   constructor(private recipeService: RecipeService) { }
+
 
   ngOnInit(): void {
     this.recipeService.getRefreshNeeded
       .subscribe(() => this.getAllRecipes());
     this.getAllRecipes();
+  }
+
+  openModal() {
+    this.display = 'block';
+  }
+
+  onCloseHandled() {
+    this.display = 'none';
   }
 
   getAllRecipes() {
