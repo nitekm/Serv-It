@@ -11,6 +11,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ReactiveFormsModule} from "@angular/forms";
 import { IngredientListComponent } from './components/ingredient-list/ingredient-list.component';
 import { PlannedRecipesComponent } from './components/planned-recipes/planned-recipes.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { PlannedRecipesComponent } from './components/planned-recipes/planned-re
     HttpClientModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

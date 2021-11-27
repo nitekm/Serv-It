@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Ingredient} from "../../models/ingredient";
 import {IngredientService} from "../../service/ingredient.service";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-ingredient-list',
@@ -10,13 +11,13 @@ import {IngredientService} from "../../service/ingredient.service";
 export class IngredientListComponent implements OnInit {
   ingredientList: Array<Ingredient>;
 
-  constructor(private ingredientService: IngredientService) {}
+  constructor(private ingredientService: IngredientService, public activeModal: NgbActiveModal) {}
 
   ngOnInit(): void {
-    this.getPlannedRecipes();
+    this.getPlannedIngredients();
   }
 
-  getPlannedRecipes() {
+  getPlannedIngredients() {
     this.ingredientService.getPlannedIngredients()
       .subscribe(ingredients => this.ingredientList = ingredients);
     console.log(this.ingredientList);
