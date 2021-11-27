@@ -39,8 +39,8 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
       this.recipeForm = this.formBuilder.group({
         name: [''],
         timeToPrepare: [''],
-        ingredients: this.formBuilder.array([]),
-        steps: this.formBuilder.array([])
+        ingredients: this.formBuilder.array(['']),
+        steps: this.formBuilder.array([''])
       });
     }
   }

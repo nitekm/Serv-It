@@ -1,38 +1,56 @@
-<h2 class="mb-4">Nowy przepis:</h2>
-<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="ms-3">
+<div class="ms-3">
 
-  <div class="mb-3">
-    <label for="name" class="form-label">Nazwa przepisu</label>
-    <input type="text" class="form-control" id="name" required formControlName="name">
+  <h2 class="my-4 fw-bold d-inline-block bg-light">
+    <span><i class="bi bi-plus-square"></i> Nowy Przepis</span></h2>
+  <div class="m-1 col-6">
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="ms-3">
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Nazwa przepisu</label>
+        <input type="text" class="form-control" id="name" required formControlName="name">
+      </div>
+
+      <div class="mb-3">
+        <label for="timeToPrepare" class="form-label">Czas Przygotowania</label>
+        <input type="text" class="form-control" id="timeToPrepare" pattern="\d:\d\d" formControlName="timeToPrepare">
+        <label for="timeToPrepare" class="form-text">Format H:mm</label>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Składniki</label>
+        <div formArrayName="ingredients" *ngFor="let ingredient of ingredients.controls; let i=index">
+          <input type="text" class="form-control m-1" [formControlName]="i">
+        </div>
+        <button type="button" class="btn btn-primary m-1" (click)="addIngredient()">
+          <i class="bi bi-plus-circle"></i>
+        </button>
+        <button type="button" class="btn btn-danger m-1" (click)="removeIngredient()">
+          <i class="bi bi-dash-circle"></i>
+        </button>
+      </div>
+
+      <div class="mb-3">
+        <div class="mb-3">
+          <label class="form-label">Kroki Przygotowania:</label>
+          <div formArrayName="steps" *ngFor="let step of steps.controls; let i=index">
+            <input type="text" class="form-control m-1" [formControlName]="i">
+          </div>
+          <button type="button" class="btn btn-primary m-1" (click)="addStep()">
+            <i class="bi bi-plus-circle"></i>
+          </button>
+          <button type="button" class="btn btn-danger m-1" (click)="removeStep()">
+            <i class="bi bi-dash-circle"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mx-5 my-2">
+        <a routerLink="/recipes" class="btn btn-outline-dark btn-lg float-start">
+          <span><i class="bi bi-arrow-left text-2"></i> Wróć</span></a>
+        <button type="submit" class="btn btn-outline-primary btn-lg float-end">
+          <span><i class="bi bi-check-square"></i> Zapisz</span></button>
+      </div>
+
+    </form>
   </div>
-
-  <div class="mb-3">
-    <label for="timeToPrepare" class="form-label">Czas Przygotowania</label>
-    <input type="text" class="form-control" id="timeToPrepare" pattern="\d:\d\d" formControlName="timeToPrepare">
-    <label for="timeToPrepare" class="form-text">Format H:mm</label>
-  </div>
-
-  <div class="mb-3">
-    <div class="mb-3">
-      <label class="form-label">Składniki</label>
-      <div formArrayName="ingredients" *ngFor="let ingredient of ingredients.controls; let i=index">
-        <input type="text" class="form-control" [formControlName]="i">
-      </div><br>
-      <button type="button" class="btn btn-primary m-2" (click)="addIngredient()">+</button>
-      <button type="button" class="btn btn-danger m-2" (click)="removeIngredient()">-</button>
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <div class="mb-3">
-      <label class="form-label">Kroki Przygotowania:</label>
-      <div formArrayName="steps" *ngFor="let step of steps.controls; let i=index">
-        <input type="text" class="form-control" [formControlName]="i">
-      </div><br>
-      <button type="button" class="btn btn-primary m-2" (click)="addStep()">+</button>
-      <button type="button" class="btn btn-danger m-2" (click)="removeStep()">-</button>
-    </div>
-  </div>
-
-  <button type="submit" class="btn btn-primary">+ Add Recipe</button>
-</form>
+</div>
