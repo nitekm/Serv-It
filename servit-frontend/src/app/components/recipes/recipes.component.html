@@ -20,8 +20,8 @@
     <h3><i class="bi bi-book"></i> Przepisy:</h3>
   </div>
 
-  <div class="row">
-    <div *ngFor="let recipe of recipesList;" class="card-deck m-0 my-2 col-4">
+  <div class="row m-1">
+    <div *ngFor="let recipe of recipesList;" class="card-deck m-0 my-1 col-4">
       <div class="card border-3 border-primary rounded shadow-sm">
         <app-single-recipe [recipe]="recipe"></app-single-recipe>
       </div>
