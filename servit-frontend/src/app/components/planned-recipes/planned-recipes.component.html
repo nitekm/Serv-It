@@ -1,16 +1,21 @@
 <div class="bg-light m-2">
+  <!-- Card-->
   <div class="card border border-light border-2 rounded shadow-lg">
+    <!-- Card Header-->
     <h4 class="card-header text-center">Zaplanowane dania</h4>
+    <!-- Content if there is no planned recipes -->
       <ul *ngIf="plannedRecipeList == undefined || plannedRecipeList.length == 0" class="list-group list-group-flush">
         <li class="list-group-item text-danger bg-light">
           <span><i class="bi bi-bell"></i> Będziesz głodny! Zaplanuj coś!</span>
         </li>
       </ul>
+      <!-- Card content (list of planned recipes) -->
       <ul class="list-group list-group-flush" *ngFor="let planned of plannedRecipeList">
         <li class="list-group-item">
           <span><i class="bi bi-check-square"></i> {{planned.name}}</span>
         </li>
       </ul>
+    <!-- Button to display ingredient list -->
     <a class="btn btn-sm btn-outline-info p-1" (click)="open()">Lista Produktów</a>
   </div>
 </div>

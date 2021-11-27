@@ -1,21 +1,26 @@
 <div class="ms-3">
-
+  <!-- Heading -->
   <h2 class="my-4 fw-bold d-inline-block bg-light">
     <span><i class="bi bi-plus-square"></i> Nowy Przepis</span></h2>
+
+  <!-- Form -->
   <div class="m-1 col-6">
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="ms-3">
 
+      <!-- Recipe Name -->
       <div class="mb-3">
         <label for="name" class="form-label">Nazwa przepisu</label>
         <input type="text" class="form-control" id="name" required formControlName="name">
       </div>
 
+      <!-- Preparation time-->
       <div class="mb-3">
         <label for="timeToPrepare" class="form-label">Czas Przygotowania</label>
         <input type="text" class="form-control" id="timeToPrepare" pattern="\d:\d\d" formControlName="timeToPrepare">
         <label for="timeToPrepare" class="form-text">Format H:mm</label>
       </div>
 
+      <!-- Ingredients -->
       <div class="mb-3">
         <label class="form-label">Składniki</label>
         <div formArrayName="ingredients" *ngFor="let ingredient of ingredients.controls; let i=index">
@@ -29,6 +34,7 @@
         </button>
       </div>
 
+      <!-- Steps -->
       <div class="mb-3">
         <div class="mb-3">
           <label class="form-label">Kroki Przygotowania:</label>
@@ -44,6 +50,7 @@
         </div>
       </div>
 
+      <!-- Go Back/Save buttons-->
       <div class="mx-5 my-2">
         <a routerLink="/recipes" class="btn btn-outline-dark btn-lg float-start">
           <span><i class="bi bi-arrow-left text-2"></i> Wróć</span></a>

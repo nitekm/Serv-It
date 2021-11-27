@@ -1,11 +1,15 @@
 <div class="bg-light m-2">
+  <!-- Card Header-->
   <h3 class="card-header text-center">{{recipe.name}}</h3>
+
+  <!-- Card body with time to prepare and action buttons-->
   <div class="card-body row">
     <div class="col-4 text-center">
       <h6>Czas przygotowania:</h6>
       <span class="lead text-danger">{{recipe.timeToPrepare}}</span>
     </div>
 
+    <!-- Action buttons -->
     <div class="col-8 text-center">
       <div class="btn-group btn-sm">
         <button class="btn btn-sm btn-outline-primary rounded-2 me-2" (click)="onPlanClick(recipe.id)">
@@ -21,6 +25,7 @@
     </div>
   </div>
 
+  <!-- details section expandable on chevron click-->
   <div *ngIf="!detailsVisible" class="card-footer text-center p-0">
     <button class="btn" type="button" (click)="toggleDetailsView()">
       <span><i class="bi bi-chevron-compact-down"></i></span>
@@ -49,6 +54,7 @@
   </div>
 </div>
 
+<!-- Popus on delete confirmation-->
 <ng-template #content let-modal>
   <div class="modal-header bg-light">
     <h4 class="modal-title text-center text-danger" id="delete-confirmation-modal">Usuń Przepis</h4>

@@ -1,17 +1,24 @@
-<div class="modal-header bg-light">
-  <h3 class="modal-title">Lista produktów</h3>
-  <button type="button" class="btn-close" aria-label="Close"
-          (click)="activeModal.dismiss()"></button>
-</div>
-<div class="modal-body">
-  <div *ngFor="let ingredient of ingredientList">
-    <ul>
-      <li>{{ingredient.name}}</li>
-    </ul>
+<div>
+  <div class="modal-header bg-light">
+    <!-- Heading with x close button-->
+    <h3 class="modal-title">Lista produktów</h3>
+    <button type="button" class="btn-close" aria-label="Close"
+            (click)="activeModal.dismiss()"></button>
   </div>
-</div>
-<div class="modal-footer bg-light">
-  <button type="button" class="btn btn-outline-primary">
-    <span><i class="bi bi-list-check"></i></span> Stwórz listę zakupów!
-  </button>
+
+  <!-- Popup body with ingredients list-->
+  <div class="modal-body">
+    <div *ngFor="let ingredient of ingredientList">
+      <ul>
+        <li>{{ingredient.name}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Footer with create shopping list button-->
+  <div class="modal-footer bg-light">
+    <button type="button" class="btn btn-outline-info">
+      <span><i class="bi bi-list-check"></i></span> Stwórz listę zakupów!
+    </button>
+  </div>
 </div>
