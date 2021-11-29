@@ -16,7 +16,8 @@
         </li>
       </ul>
     <!-- Button to display ingredient list -->
-    <a class="btn btn-sm btn-outline-info p-1" (click)="open()">Lista Produktów</a>
+    <a *ngIf="plannedRecipeList != undefined && plannedRecipeList.length > 0"
+       class="btn btn-sm btn-outline-info p-1" (click)="open()">Lista Produktów</a>
   </div>
 </div>
 

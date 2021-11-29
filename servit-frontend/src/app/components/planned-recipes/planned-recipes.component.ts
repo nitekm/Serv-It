@@ -17,6 +17,7 @@ export class PlannedRecipesComponent implements OnInit {
   ngOnInit(): void {
     this.recipeService.getRefreshNeeded
       .subscribe(() => this.getAllPlannedRecipes());
+    this.getAllPlannedRecipes();
   }
 
   open() {
