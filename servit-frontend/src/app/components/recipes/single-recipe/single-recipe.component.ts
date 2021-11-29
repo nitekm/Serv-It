@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Recipe} from "../../../models/recipe";
 import {RecipeService} from "../../../service/recipe.service";
 import {Router} from "@angular/router";
@@ -43,5 +43,4 @@ export class SingleRecipeComponent implements OnInit {
     this.recipeService.passRecipe(this.recipe);
     this.router.navigate(['/add-recipe']);
   }
-
 }
