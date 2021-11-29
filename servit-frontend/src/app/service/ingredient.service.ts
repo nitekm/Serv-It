@@ -16,4 +16,8 @@ export class IngredientService {
   getPlannedIngredients(): Observable<Array<Recipe>> {
     return this.httpClient.get<Array<Recipe>>(this.url+'planned');
   }
+
+  createAndSendTasks() {
+    return this.httpClient.post<any>(this.url + 'toList', {});
+  }
 }

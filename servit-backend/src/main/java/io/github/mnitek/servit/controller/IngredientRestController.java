@@ -4,10 +4,8 @@ import io.github.mnitek.servit.logic.IngredientService;
 import io.github.mnitek.servit.model.Ingredient;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +19,12 @@ public class IngredientRestController {
     @GetMapping("/planned")
     public ResponseEntity<List<Ingredient>> getAllPlannedIngredients() {
         return ResponseEntity.ok(ingredientService.getAllPlannedIngredients());
+    }
+
+    @Transactional
+    @PostMapping("/toList")
+    public ResponseEntity<Void> createAndSendTasks() {
+        ingredientService.createIngredientsTasks();
+        return ResponseEntity.ok().build();
     }
 }

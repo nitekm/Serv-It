@@ -22,4 +22,9 @@ export class IngredientListComponent implements OnInit {
       .subscribe(ingredients => this.ingredientList = ingredients);
     console.log(this.ingredientList);
   }
+
+  onCreateShoppingListClick() {
+    this.ingredientService.createAndSendTasks()
+      .subscribe();
+  }
 }
