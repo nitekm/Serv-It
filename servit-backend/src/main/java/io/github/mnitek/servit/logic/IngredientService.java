@@ -46,6 +46,18 @@ public class IngredientService {
         recipeRepository.findAll().forEach(recipe -> recipe.setPlanned(false));
     }
 
+    public void togglePlanned(int id) {
+        if (!ingredientRepository.findById(id).isPresent()) {
+            throw new IllegalArgumentException("Ingredient with given id not found!");
+        }
+        ingredientRepository.findById(id)
+                .ifPresent(ingredient -> {
+                    ingredient.setPlanned(false);
+                    ingredientRepository.save(ingredient);
+                });
+
+    }
+
     public List<Ingredient> getAllPlannedIngredients() {
         return ingredientRepository.findAllPlannedOrderByName();
     }

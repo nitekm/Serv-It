@@ -27,4 +27,10 @@ public class IngredientRestController {
         ingredientService.createIngredientsTasks();
         return ResponseEntity.ok().build();
     }
+
+    @PatchMapping("planned/{id}")
+    public ResponseEntity<Void> deleteIngredientFromPlanned(@PathVariable("id") int id) {
+        ingredientService.togglePlanned(id);
+        return ResponseEntity.ok().build();
+    }
 }

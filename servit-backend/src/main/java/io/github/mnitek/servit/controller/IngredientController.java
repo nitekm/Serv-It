@@ -24,6 +24,7 @@ public class IngredientController {
         service.createIngredientsTasks();
         return "redirect:/recipes";
     }
+
     @GetMapping
     public String getAllPlannedIngredients(Model model) {
         model.addAttribute("ingredients", service.getAllPlannedIngredients());

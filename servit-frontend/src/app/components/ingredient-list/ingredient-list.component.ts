@@ -14,17 +14,22 @@ export class IngredientListComponent implements OnInit {
   constructor(private ingredientService: IngredientService, public activeModal: NgbActiveModal) {}
 
   ngOnInit(): void {
+    this.ingredientService.getRefreshNeeded
+      .subscribe(() => this.getPlannedIngredients());
     this.getPlannedIngredients();
   }
 
   getPlannedIngredients() {
     this.ingredientService.getPlannedIngredients()
       .subscribe(ingredients => this.ingredientList = ingredients);
-    console.log(this.ingredientList);
   }
 
   onCreateShoppingListClick() {
     this.ingredientService.createAndSendTasks()
       .subscribe();
+  }
+
+  onMinusClick(id: number) {
+    this.ingredientService.toggleIngredientPlanned(id);
   }
 }

@@ -10,7 +10,9 @@
   <div class="modal-body">
     <div *ngFor="let ingredient of ingredientList">
       <ul>
-        <li>{{ingredient.name}}</li>
+        <li>{{ingredient.name}}
+          <button type="button" class="btn btn-sm text-danger" (click)="onMinusClick(ingredient.id)"><i class="bi bi-dash-square"></i></button>
+        </li>
       </ul>
     </div>
   </div>
