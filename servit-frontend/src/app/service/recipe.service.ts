@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Recipe} from "../models/recipe";
 import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
+import {environment} from "src/environments/environment";
 import {Endpoints} from "../shared/endpoints";
 import {Observable, Subject} from "rxjs";
-import {core} from "@angular/compiler";
+import {ToastService} from "src/app/service/toast.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class RecipeService {
   private refreshNeeded = new Subject<void>();
   errorOccurred = new Subject<void>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private toast: ToastService) { }
 
   get getRefreshNeeded() {
     return this.refreshNeeded;
@@ -50,6 +50,7 @@ export class RecipeService {
     return this.http.post<Recipe>(this.url, recipe, {})
       .subscribe(() => {
         this.refreshNeeded.next();
+        this.toast.toastSuccess();
       });
   }
 
@@ -59,12 +60,16 @@ export class RecipeService {
 
   deleteRecipe(id: number): void {
     this.http.delete(this.url + id, {})
-      .subscribe(() => this.refreshNeeded.next());
+      .subscribe(() => {
+        this.refreshNeeded.next();
+        this.toast.toastSuccess();
+      });
   }
 
   togglePlanned(id: number) {
     this.http.patch(this.url + id, {}, {})
-      .subscribe(() => this.refreshNeeded.next());
+      .subscribe(() => {
+        this.refreshNeeded.next()
+      });
   }
-
 }

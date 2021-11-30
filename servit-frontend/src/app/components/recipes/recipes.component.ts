@@ -10,7 +10,6 @@ import {Recipe} from "../../models/recipe";
 
 export class RecipesComponent implements OnInit {
   recipesList: Array<Recipe>;
-  closeResult = '';
 
   constructor(private recipeService: RecipeService) { }
 
