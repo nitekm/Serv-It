@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ServIt.iml" filepath="$PROJECT_DIR$/.idea/ServIt.iml" />
       <module fileurl="file://$PROJECT_DIR$/servit-backend/servit.iml" filepath="$PROJECT_DIR$/servit-backend/servit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/servit-frontend/servit-frontend.iml" filepath="$PROJECT_DIR$/servit-frontend/servit-frontend.iml" />
     </modules>
   </component>
 </project>
