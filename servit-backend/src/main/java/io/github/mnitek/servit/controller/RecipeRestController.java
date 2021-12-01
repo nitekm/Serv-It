@@ -17,34 +17,27 @@ import java.util.List;
 @AllArgsConstructor
 public class RecipeRestController {
     private RecipeService recipeService;
-    private RecipeRepository recipeRepository;
 
     @GetMapping
     public ResponseEntity<List<Recipe>> getAllRecipes() {
-        return ResponseEntity.ok(recipeRepository.findAll());
+        return ResponseEntity.ok(recipeService.getAllRecipes());
     }
 
     @GetMapping("/planned")
     public ResponseEntity<List<Recipe>> getAllPlannedRecipes() {
-        return ResponseEntity.ok(recipeRepository.findAllPlanned());
+        return ResponseEntity.ok(recipeService.getAllPlanned());
     }
 
     @PostMapping
     public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe) {
-        var newRecipe = recipeRepository.save(recipe);
+        var newRecipe = recipeService.addNewRecipe(recipe);
         return ResponseEntity.ok(newRecipe);
     }
 
     @PutMapping
     public ResponseEntity<Recipe> editRecipe(@PathVariable("id") int id, @Valid Recipe toUpdate) {
-        if (!recipeRepository.existsById(id)) {
-            throw new IllegalArgumentException("Recipe with given id not found!");
-        }
-        recipeRepository.findById(id).ifPresent(recipe -> {
-            recipe.updateRecipe(toUpdate);
-            recipeRepository.save(recipe);
-        });
-        return ResponseEntity.ok(toUpdate);
+        var editRecipe = recipeService.editRecipe(id, toUpdate);
+        return ResponseEntity.ok(editRecipe);
     }
 
     @DeleteMapping("/{id}")
