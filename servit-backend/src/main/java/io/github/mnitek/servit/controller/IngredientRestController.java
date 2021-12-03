@@ -33,4 +33,9 @@ public class IngredientRestController {
         ingredientService.togglePlanned(id);
         return ResponseEntity.ok().build();
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    ResponseEntity<?> handleIllegalArgument(IllegalArgumentException e) {
+        return ResponseEntity.notFound().build();
+    }
 }

@@ -58,4 +58,9 @@ public class RecipeRestController {
         recipeService.togglePlanned(id);
         return ResponseEntity.ok().build();
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    ResponseEntity<?> handleIllegalArgument(IllegalArgumentException e) {
+        return ResponseEntity.notFound().build();
+    }
 }
