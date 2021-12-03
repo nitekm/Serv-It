@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {RecipeService} from "../../service/recipe.service";
 import {Recipe} from "../../models/recipe";
 import {Ingredient} from "../../models/ingredient";
 import {Step} from "../../models/step";
 import {Router} from "@angular/router";
+import {CustomValidatorService} from "src/app/service/custom-validator.service";
 
 @Component({
   selector: 'app-add-recipe',
@@ -13,9 +14,13 @@ import {Router} from "@angular/router";
 })
 export class AddRecipeComponent implements OnInit, OnDestroy {
 
-  constructor(private formBuilder: FormBuilder, private recipeService: RecipeService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder,
+              private recipeService: RecipeService,
+              private router: Router,
+              private customValidator: CustomValidatorService) { }
   recipeForm: FormGroup;
   recipe: Recipe;
+  submitted = false;
 
   ngOnInit(): void {
     this.recipe = this.recipeService.recipe;
@@ -30,19 +35,23 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
         stepArray.push(step.description));
 
       this.recipeForm = this.formBuilder.group({
-        name: [this.recipe.name],
-        timeToPrepare: [this.recipe.timeToPrepare],
+        name: [this.recipe.name, Validators.required],
+        timeToPrepare: [this.recipe.timeToPrepare, [Validators.required, this.customValidator.timeToPrepareValidator()]],
         ingredients: this.formBuilder.array(ingredientArray),
         steps: this.formBuilder.array(stepArray),
       });
     } else {
       this.recipeForm = this.formBuilder.group({
-        name: [''],
-        timeToPrepare: [''],
-        ingredients: this.formBuilder.array(['']),
-        steps: this.formBuilder.array([''])
+        name: ['', Validators.required],
+        timeToPrepare: ['', [Validators.required, this.customValidator.timeToPrepareValidator()]],
+        ingredients: this.formBuilder.array([]),
+        steps: this.formBuilder.array([])
       });
     }
+  }
+
+  get recipeFormControl() {
+    return this.recipeForm.controls;
   }
 
   addIngredient() {
@@ -91,16 +100,16 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
         steps.push(new Step(step));
       })
 
-    let recipe = new Recipe(
+    return new Recipe(
       this.recipeForm.value.name,
       this.recipeForm.value.timeToPrepare,
       ingredients,
       steps
     );
-    return recipe;
   }
 
   onSubmit() {
+    this.submitted = true;
     this.recipeService.addRecipe(this.createRecipe());
     this.router.navigate(['/recipes']);
   }
@@ -108,4 +117,6 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.recipeService.recipeUnassign();
   }
+
+
 }

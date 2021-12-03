@@ -25,10 +25,8 @@ public class Recipe {
     private String name;
     @Pattern(regexp = "^[0-9]:[0-5][0-9]$", message = "Czas przygotowania musi być w formacie H:mm")
     private String timeToPrepare;
-    @Valid
     @OneToMany(cascade = CascadeType.ALL)
     private List<Ingredient> ingredients = new ArrayList<>();
-    @Valid
     @OneToMany(cascade = CascadeType.ALL)
     private List<Step> steps = new ArrayList<>();
     private boolean planned;
