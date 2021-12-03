@@ -1,5 +1,7 @@
 export enum Endpoints {
   RECIPES = 'recipes/',
   INGREDIENTS = 'ingredients/',
-  STEPS = 'steps/'
+  STEPS = 'steps/',
+  PLANNED = 'planned/',
+  TOLIST = 'toList/'
 }

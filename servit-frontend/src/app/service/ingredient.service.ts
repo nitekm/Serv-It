@@ -20,7 +20,7 @@ export class IngredientService {
   }
 
   getPlannedIngredients() {
-    return this.httpClient.get<Array<Recipe>>(this.url+'planned')
+    return this.httpClient.get<Array<Recipe>>(this.url + Endpoints.PLANNED)
       .pipe(
         catchError((err => {
             this.toast.toastError()
@@ -31,7 +31,7 @@ export class IngredientService {
   }
 
   createAndSendTasks() {
-    return this.httpClient.post<any>(this.url + 'toList', {})
+    return this.httpClient.post<any>(this.url + Endpoints.TOLIST, {})
       .pipe(
         catchError((err => {
           this.toast.toastError()
@@ -42,7 +42,7 @@ export class IngredientService {
   }
 
   toggleIngredientPlanned(id: number) {
-    return this.httpClient.patch(this.url + 'planned/' + id, {})
+    return this.httpClient.patch(this.url + Endpoints.PLANNED + id, {})
       .subscribe(() => this.getRefreshNeeded.next(),
         error => this.toast.toastError());
   }

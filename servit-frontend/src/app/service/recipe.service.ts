@@ -46,7 +46,7 @@ export class RecipeService {
   }
 
   getPlannedRecipes() {
-    return this.http.get<Array<Recipe>>(this.url + 'planned')
+    return this.http.get<Array<Recipe>>(this.url + Endpoints.PLANNED)
       .pipe(
         catchError((err => {
             this.toast.toastError()
