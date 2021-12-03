@@ -13,6 +13,6 @@ export class ToastService {
   }
 
   toastError() {
-    this.toast.success('Operacja zakończona niepowodzeniem', 'Błąd!')
+    this.toast.error('Operacja zakończona niepowodzeniem', 'Błąd!')
   }
 }

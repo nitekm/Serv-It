@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, Subject} from "rxjs";
+import {catchError, Observable, Subject, throwError} from "rxjs";
 import {Recipe} from "../models/recipe";
 import {environment} from "../../environments/environment";
 import {Endpoints} from "../shared/endpoints";
+import {ToastService} from "src/app/service/toast.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,22 +13,37 @@ export class IngredientService {
   url: string = environment.baseUrl + Endpoints.INGREDIENTS;
   private refreshNeeded = new Subject<void>();
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private toast: ToastService) { }
 
   get getRefreshNeeded() {
     return this.refreshNeeded;
   }
 
-  getPlannedIngredients(): Observable<Array<Recipe>> {
-    return this.httpClient.get<Array<Recipe>>(this.url+'planned');
+  getPlannedIngredients() {
+    return this.httpClient.get<Array<Recipe>>(this.url+'planned')
+      .pipe(
+        catchError((err => {
+            this.toast.toastError()
+            return throwError(err);
+          })
+        )
+      );
   }
 
   createAndSendTasks() {
-    return this.httpClient.post<any>(this.url + 'toList', {});
+    return this.httpClient.post<any>(this.url + 'toList', {})
+      .pipe(
+        catchError((err => {
+          this.toast.toastError()
+          return throwError(err);
+        })
+        )
+      );
   }
 
   toggleIngredientPlanned(id: number) {
     return this.httpClient.patch(this.url + 'planned/' + id, {})
-      .subscribe(() => this.getRefreshNeeded.next());
+      .subscribe(() => this.getRefreshNeeded.next(),
+        error => this.toast.toastError());
   }
 }

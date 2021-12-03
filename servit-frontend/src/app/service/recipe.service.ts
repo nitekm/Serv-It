@@ -3,7 +3,7 @@ import {Recipe} from "../models/recipe";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "src/environments/environment";
 import {Endpoints} from "../shared/endpoints";
-import {Observable, Subject} from "rxjs";
+import {catchError, Observable, Subject, throwError} from "rxjs";
 import {ToastService} from "src/app/service/toast.service";
 
 @Injectable({
@@ -35,11 +35,25 @@ export class RecipeService {
   }
 
   getAllRecipes(): Observable<Array<Recipe>> {
-    return this.http.get<Array<Recipe>>(this.url);
+    return this.http.get<Array<Recipe>>(this.url)
+      .pipe(
+        catchError((err => {
+            this.toast.toastError()
+            return throwError(err);
+          })
+        )
+      );
   }
 
   getPlannedRecipes() {
-    return this.http.get<Array<Recipe>>(this.url + 'planned');
+    return this.http.get<Array<Recipe>>(this.url + 'planned')
+      .pipe(
+        catchError((err => {
+            this.toast.toastError()
+            return throwError(err);
+          })
+        )
+      );
   }
 
   getSingleRecipe(id: number): Observable<Recipe> {
@@ -51,7 +65,9 @@ export class RecipeService {
       .subscribe(() => {
         this.refreshNeeded.next();
         this.toast.toastSuccess();
-      });
+      },
+      error => this.toast.toastError()
+      );
   }
 
   editRecipe(id: number, recipe: Recipe): Observable<Recipe> {
@@ -63,13 +79,17 @@ export class RecipeService {
       .subscribe(() => {
         this.refreshNeeded.next();
         this.toast.toastSuccess();
-      });
+      },
+        error => this.toast.toastError()
+      );
   }
 
   togglePlanned(id: number) {
     this.http.patch(this.url + id, {}, {})
       .subscribe(() => {
         this.refreshNeeded.next()
-      });
+      },
+        error => this.toast.toastError()
+      );
   }
 }
