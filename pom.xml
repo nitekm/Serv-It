@@ -22,8 +22,8 @@
   </properties>
 
   <modules>
-    <module>servit-backend</module>
     <module>servit-frontend</module>
+    <module>servit-backend</module>
   </modules>
 
 </project>

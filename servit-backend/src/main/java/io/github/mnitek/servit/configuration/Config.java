@@ -23,10 +23,10 @@ public class Config implements WebMvcConfigurer {
         };
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("home");
-    }
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/").setViewName("home");
+//    }
 
     @Bean
     public RestTemplate restTemplate() {
