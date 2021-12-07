@@ -2,6 +2,7 @@ package io.github.mnitek.servit.model;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
