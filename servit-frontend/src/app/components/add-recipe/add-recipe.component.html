@@ -4,7 +4,7 @@
     <span><i class="bi bi-plus-square"></i> Nowy Przepis</span></h2>
 
   <!-- Form -->
-  <div class="m-1 col-6">
+  <div class="m-1 col-lg-6 col-sm-10 col-md-8">
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="ms-3">
 
       <!-- Recipe Name -->
@@ -37,6 +37,7 @@
         <div formArrayName="ingredients" *ngFor="let ingredient of ingredients.controls; let i=index">
           <input type="text" class="form-control m-1" [formControlName]="i">
         </div>
+        <br>
         <button type="button" class="btn btn-primary m-1" (click)="addIngredient()">
           <i class="bi bi-plus-circle"></i>
         </button>
@@ -48,11 +49,11 @@
       <!-- Steps -->
       <div class="mb-3">
         <div class="mb-3">
-          <label class="form-label">Kroki Przygotowania:</label>
+          <label class="form-label">Kroki Przygotowania</label>
           <div formArrayName="steps" *ngFor="let step of steps.controls; let i=index">
             <input type="text" class="form-control m-1" [formControlName]="i">
           </div>
-
+          <br>
           <button type="button" class="btn btn-primary m-1" (click)="addStep()">
             <i class="bi bi-plus-circle"></i>
           </button>
