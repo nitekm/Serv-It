@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Task {
     private String content;
+    private long project_id = 2261571645L;
 
     public Task ingredientToTask(Ingredient ingredient) {
         content = ingredient.getName();
-        return new Task(content);
+        return new Task(content, project_id);
     }
 }
