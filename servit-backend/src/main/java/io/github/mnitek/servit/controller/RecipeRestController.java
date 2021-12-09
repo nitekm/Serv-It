@@ -35,7 +35,7 @@ public class RecipeRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Recipe> editRecipe(@PathVariable("id") int id, @Valid Recipe toUpdate) {
+    public ResponseEntity<Recipe> editRecipe(@PathVariable("id") int id, @Valid @RequestBody Recipe toUpdate) {
         var editRecipe = recipeService.editRecipe(id, toUpdate);
         return ResponseEntity.ok(editRecipe);
     }

@@ -15,7 +15,8 @@ export class RecipeService {
   private refreshNeeded = new Subject<void>();
   errorOccurred = new Subject<void>();
 
-  constructor(private http: HttpClient, private toast: ToastService) { }
+  constructor(private http: HttpClient, private toast: ToastService) {
+  }
 
   get getRefreshNeeded() {
     return this.refreshNeeded;
@@ -63,23 +64,28 @@ export class RecipeService {
   addRecipe(recipe: Recipe) {
     return this.http.post<Recipe>(this.url, recipe, {})
       .subscribe(() => {
-        this.refreshNeeded.next();
-        this.toast.toastSuccess();
-      },
-      error => this.toast.toastError()
+          this.refreshNeeded.next();
+          this.toast.toastSuccess();
+        },
+        error => this.toast.toastError()
       );
   }
 
-  editRecipe(id: number, recipe: Recipe): Observable<Recipe> {
-    return this.http.put<any>(this.url + id, recipe);
+  editRecipe(id: number, recipe: Recipe) {
+    return this.http.put<Recipe>(this.url + id, recipe)
+      .subscribe(() => {
+          this.getRefreshNeeded.next();
+          this.toast.toastSuccess();
+        },
+        error => this.toast.toastError());
   }
 
   deleteRecipe(id: number): void {
     this.http.delete(this.url + id, {})
       .subscribe(() => {
-        this.refreshNeeded.next();
-        this.toast.toastSuccess();
-      },
+          this.refreshNeeded.next();
+          this.toast.toastSuccess();
+        },
         error => this.toast.toastError()
       );
   }
@@ -87,8 +93,8 @@ export class RecipeService {
   togglePlanned(id: number) {
     this.http.patch(this.url + id, {}, {})
       .subscribe(() => {
-        this.refreshNeeded.next()
-      },
+          this.refreshNeeded.next()
+        },
         error => this.toast.toastError()
       );
   }
