@@ -19,6 +19,10 @@ export class RecipesComponent implements OnInit {
     this.getAllRecipes();
   }
 
+  handlePlannedClick() {
+    window.scroll(0,0);
+  }
+
   getAllRecipes() {
     this.recipeService.getAllRecipes()
       .subscribe(recipes => this.recipesList = recipes);
