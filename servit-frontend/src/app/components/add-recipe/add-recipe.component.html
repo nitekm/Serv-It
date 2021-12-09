@@ -1,7 +1,13 @@
 <div class="ms-3">
   <!-- Heading -->
-  <h2 class="my-4 fw-bold d-inline-block bg-light">
-    <span><i class="bi bi-plus-square"></i> Nowy Przepis</span></h2>
+  <div *ngIf="this.recipe == undefined; else edit">
+    <h2 class="my-4 fw-bold d-inline-block bg-light">
+      <span><i class="bi bi-plus-square"></i> Nowy Przepis</span></h2>
+  </div>
+    <ng-template #edit>
+    <h2 class="my-4 fw-bold d-inline-block bg-light">
+      <span><i class="bi bi-pencil-square"></i> Edytuj Przepis</span></h2>
+    </ng-template>
 
   <!-- Form -->
   <div class="m-1 col-lg-6 col-sm-10 col-md-8">
@@ -20,7 +26,8 @@
       <!-- Preparation time-->
       <div class="mb-3">
         <label for="timeToPrepare" class="form-label">Czas Przygotowania</label>
-        <input type="text" class="form-control" id="timeToPrepare" formControlName="timeToPrepare" placeholder="Format H:mm">
+        <input type="text" class="form-control" id="timeToPrepare" formControlName="timeToPrepare"
+               placeholder="Format H:mm">
         <span class="text-danger"
               *ngIf="(recipeFormControl['timeToPrepare'].touched || submitted) && recipeFormControl['timeToPrepare'].errors?.['required']">
           Czas przygotowania jest wymagany

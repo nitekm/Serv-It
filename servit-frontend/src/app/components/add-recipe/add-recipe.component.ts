@@ -21,10 +21,12 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
   recipeForm: FormGroup;
   recipe: Recipe;
   submitted = false;
+  edited: boolean = false;
 
   ngOnInit(): void {
     this.recipe = this.recipeService.recipe;
     if (this.recipe != undefined) {
+      this.edited = true;
 
       let ingredientArray = new Array<string>();
       this.recipe.ingredients.forEach(ingredient =>
@@ -99,7 +101,6 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
       .forEach((step: string) => {
         steps.push(new Step(step));
       })
-
     return new Recipe(
       this.recipeForm.value.name,
       this.recipeForm.value.timeToPrepare,
@@ -110,13 +111,16 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
-    this.recipeService.addRecipe(this.createRecipe());
+    if (this.edited) {
+      this.recipeService.editRecipe(this.recipe.id, this.createRecipe())
+    }
+     else {
+      this.recipeService.addRecipe(this.createRecipe());
+    }
     this.router.navigate(['/recipes']);
   }
 
   ngOnDestroy(): void {
     this.recipeService.recipeUnassign();
   }
-
-
 }
