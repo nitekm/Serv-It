@@ -25,11 +25,11 @@ export class IngredientListComponent implements OnInit {
   }
 
   onCreateShoppingListClick() {
-    this.ingredientService.createAndSendTasks()
-      .subscribe();
+    this.ingredientService.createAndSendTasks();
   }
 
   onMinusClick(id: number) {
     this.ingredientService.toggleIngredientPlanned(id);
   }
+
 }
