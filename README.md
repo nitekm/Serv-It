@@ -13,6 +13,8 @@ to external TODO list (<a href="https://todoist.com/">todoist.com</a>).
   * Lombok
   * Security with Keycloak
 * Thymeleaf
+* Angular
+* TypeScript
 
 ## Application Overview
 ### Home page
