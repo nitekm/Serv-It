@@ -12,7 +12,6 @@ to external TODO list (<a href="https://todoist.com/">todoist.com</a>).
   * H2 Database
   * Lombok
   * Security with Keycloak
-* Thymeleaf
 * Angular
 * TypeScript
 
